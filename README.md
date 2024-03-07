@@ -69,5 +69,5 @@ After training is done, the prediction refinement method can be run:
 ```bash
 python -m torch.distributed.launch --nproc_per_node=1 --master_port 12345 main_evaluation.py --dataset prcc --cfg configs/res50_cels_cal.yaml --gpu 0 --root <dir_containing_data> --gen_path <path_test_generated_data>
 ```
-The prediction refinement requires new variants for the queries. Thus, before running the last command it is needed to generate these variants, you can do this by rerunning steps 3 4, but this time the input data should be the queries.
-The location of these variants should replace path_test_generated_data in the previous command line.
+The prediction refinement requires new variants for the queries. Thus, before running the last command, it is needed to generate these variants.
+You can do this by rerunning steps 3 and 4, but this time the input data should be the queries.
