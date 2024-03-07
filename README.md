@@ -71,3 +71,5 @@ python -m torch.distributed.launch --nproc_per_node=1 --master_port 12345 main_e
 ```
 The prediction refinement requires new variants for the queries. Thus, before running the last command, it is needed to generate these variants.
 You can do this by rerunning steps 3 and 4, but this time the input data should be the queries.
+
+Test link
