@@ -1,6 +1,6 @@
 ### Data Expansion via Diffusion and LLMs for Effective Clothes-Changing Person Re-ID
-###
-Dataset Link: https://ucf-my.sharepoint.com/:f:/r/personal/ny525072_ucf_edu/Documents/DLCR?csf=1&web=1&e=Feeo2l
+###Dataset Link:
+https://ucf-my.sharepoint.com/:f:/r/personal/ny525072_ucf_edu/Documents/DLCR?csf=1&web=1&e=Feeo2l
 #### Instructions
 1. Run LLaVA
 
