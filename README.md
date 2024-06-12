@@ -12,16 +12,16 @@ We store its 10 variants as a single image of the following form:
 
 Additionally, we store a .txt file that contains the descriptions of the clothing for each variant, with each description on a separate line.
 ```
- Gray shirt| Blue jeans| Black shoes
- Black top| Black pants| Black shoes
- White top| Blue jeans| White shoes
+Gray shirt| Blue jeans| Black shoes
+Black top| Black pants| Black shoes
+White top| Blue jeans| White shoes
 blue shirt| black shorts| black shoes.
- Shirt | Jeans | Shoes
- Yellow t-shirt| Black pants| Black shoes
+Shirt | Jeans | Shoes
+Yellow t-shirt| Black pants| Black shoes
 Gray top|Blue jeans|White shoes
- Green top| Blue shorts| White shoes
- Gray t-shirt| Black pants| Black shoes
- Black shirt| Black pants| Black shoes
+Green top| Blue shorts| White shoes
+Gray t-shirt| Black pants| Black shoes
+Black shirt| Black pants| Black shoes
 ```
 #### Instructions
 1. Run LLaVA
