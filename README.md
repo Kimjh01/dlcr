@@ -1,11 +1,13 @@
-![image](https://github.com/CroitoruAlin/dlcr/assets/37226076/4421d6ed-7071-4292-827f-5923f24fe5d9)### Data Expansion via Diffusion and LLMs for Effective Clothes-Changing Person Re-ID
+### Data Expansion via Diffusion and LLMs for Effective Clothes-Changing Person Re-ID
 ### Dataset Link:
 https://huggingface.co/datasets/ihaveamoose/DLCR/tree/main
 
 The generated datasets maintain the same directory structure as the corresponding original datasets. For each original image, we created a .png file that includes all 10 variants of the original image. For example, given the original sample:
+
 ![image](https://github.com/CroitoruAlin/dlcr/assets/37226076/280bbd50-dfd4-4a39-8219-fede5edc34a1)
 
 We store its 10 variants as a single image of the following form:
+
 ![image](https://github.com/CroitoruAlin/dlcr/assets/37226076/11f3bb5f-96ce-4366-82fc-aec476c16b7b)
 
 Additionally, we store a .txt file that contains the descriptions of the clothing for each variant, with each description on a separate line.
