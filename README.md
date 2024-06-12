@@ -23,6 +23,13 @@ Green top| Blue shorts| White shoes
 Gray t-shirt| Black pants| Black shoes
 Black shirt| Black pants| Black shoes
 ```
+To read the generated images when you have acces to the name of the original image, you can use the following code:
+```bash
+generated_images = os.path.join(self.generated_data_location, img_name+".png")
+generated_images = Image.open(generated_images)
+generated_images = np.array(generated_images)
+generated_images = rearrange(generated_images, 'h (b w) c->b h w c', b=10)
+```
 #### Instructions
 1. Run LLaVA
 
