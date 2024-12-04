@@ -6,7 +6,7 @@ import functools
 import os.path as osp
 from PIL import Image
 from torch.utils.data import Dataset
-
+from einops import rearrange
 
 
 def read_image(img_path):
@@ -39,25 +39,11 @@ class ImageDatasetPrcc(Dataset):
         self.data_type = config.DATA.DATASET
         self.same_img = config.DATA.SAME_IMG
         self.epoch_count = 0
-        self.pid2clothes = {}
-        self.img2genimg = {}
+        self.pids = set()
         if self.use_generated_data:
-            for cloth_id in os.listdir(self.generated_data_path):
-                for person_id in os.listdir(os.path.join(self.generated_data_path, cloth_id)):
-                    if person_id not in self.pid2clothes:
-                        self.pid2clothes[person_id] = [cloth_id]
-                    else:
-                        self.pid2clothes[person_id].append(cloth_id)
-                    for img_name in os.listdir(os.path.join(self.generated_data_path, cloth_id, person_id)):
-                        if (person_id + img_name) not in self.img2genimg:
-                            self.img2genimg[person_id + img_name] = [cloth_id]
-                        else:
-                            self.img2genimg[person_id + img_name].append(cloth_id)
-            for pid in self.pid2clothes:
-                self.pid2clothes[pid] = random.sample(self.pid2clothes[pid], len(self.pid2clothes[pid]))
-
-            pids = sorted([pid for pid in self.pid2clothes.keys()], key=lambda x: int(x))
-            self.label2pid = {label: pid for label, pid in enumerate(pids)}
+                for person_id in os.listdir(self.generated_data_path):
+                    self.pids.add(person_id)
+        self.label2pid = {label: pid for label, pid in enumerate(self.pids)}
         self.dataset = dataset
 
 
@@ -83,28 +69,24 @@ class ImageDatasetPrcc(Dataset):
             img_path, label_pid, camid, clothes_id, clothes2label = self.dataset[index]
         img_name = img_path.split("/")[-1]
         img = read_image(img_path)
-        if self.use_generated_data:
-            pid_img_name = self.label2pid[label_pid] + img_name
-            list_clothes = self.pid2clothes[self.label2pid[label_pid]]
-            if self.same_img:
-                if pid_img_name in self.img2genimg:
-                    list_clothes = self.img2genimg[pid_img_name]
-
-            final_index = max(1, int(len(list_clothes) * self._decide_percentage()))
-            new_clothes = random.choice(list_clothes[:final_index])
-            gen_imgs_path = os.path.join(self.generated_data_path, new_clothes, self.label2pid[label_pid])
-            if not self.same_img or pid_img_name not in self.img2genimg:
-                img_name = random.choice(os.listdir(gen_imgs_path))
-            path = os.path.join(gen_imgs_path, img_name)
-            gen_img = read_image(path)
-
+        if self.use_generated_data and 'train' in self.generated_data_path:
+            try:
+                generated_images = os.path.join(self.generated_data_path, self.label2pid[label_pid], img_name.split(".")[0]+".png")
+                generated_images = read_image(generated_images)
+            except:
+                generated_images = os.path.join(self.generated_data_path, self.label2pid[label_pid], img_name.split(".")[0]+".jpg")
+                generated_images = read_image(generated_images)
+            generated_images = np.array(generated_images)
+            generated_images = rearrange(generated_images, 'h (b w) c->b h w c', b=10)
+            final_index = random.choice(list(random.range(0, max(1, int(len(generated_images) * self._decide_percentage())))))
+            gen_img = generated_images[final_index]
         if self.transform is not None:
             img = self.transform(img)
-            if self.use_generated_data:
-                gen_img = self.transform(gen_img)
-        if self.use_generated_data:
+            if self.use_generated_data and 'train' in self.generated_data_path:
+                gen_img = self.transform(Image.fromarray(gen_img))
+        if self.use_generated_data and 'train' in self.generated_data_path:
             return img, gen_img, label_pid, camid, clothes_id
-        return img, label_pid, camid, clothes_id
+        return img, img, label_pid, camid, clothes_id
 
 
 def pil_loader(path):

@@ -62,7 +62,7 @@ def main(config):
     pid2clothes = torch.from_numpy(dataset.pid2clothes)
 
     # Build model
-    model, classifier, clothes_classifier = build_model(config, dataset.num_train_pids)
+    model, classifier, clothes_classifier = build_model(config, dataset)
     # Build identity classification loss, pairwise loss, clothes classificaiton loss, and adversarial loss.
     criterion_cla, criterion_pair, criterion_clothes, criterion_adv = build_losses(config, dataset.num_train_clothes)
     # Build optimizer
