@@ -1,4 +1,4 @@
-### Data Expansion via Diffusion and LLMs for Effective Clothes-Changing Person Re-ID [WACV 2024 Oral]
+### Data Expansion via Diffusion and LLMs for Effective Clothes-Changing Person Re-ID [WACV 2025 Oral]
 ### Dataset Link:
 https://huggingface.co/datasets/ihaveamoose/DLCR/tree/main
 
